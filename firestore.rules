@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isDispatcher() {
+      return request.auth != null && request.auth.token.dispatcher == true;
+    }
+
+    match /responders/{responderId} {
+      allow read: if isDispatcher();
+      allow write: if isDispatcher();
+    }
+
+    match /interventions/{interventionId} {
+      allow read: if isDispatcher();
+      allow create: if isDispatcher()
+        && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isDispatcher();
+      allow delete: if false;
+    }
+  }
+}
