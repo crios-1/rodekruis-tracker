@@ -5,6 +5,10 @@
   "hosting": {
     "site": "rodekruistracker",
     "public": "dist",
+    "predeploy": [
+      "npm run test:e2e",
+      "npm run build"
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

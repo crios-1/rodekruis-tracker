@@ -5,7 +5,8 @@ const config = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-export const firebaseConfigured = Object.values(config).every(Boolean);
+export const firebaseConfigured = import.meta.env.VITE_DEMO_MODE !== 'true'
+  && Object.values(config).every(Boolean);
 
 let firebasePromise;
 
